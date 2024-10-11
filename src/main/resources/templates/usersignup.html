@@ -13,7 +13,7 @@
 
 <h1 class="text-center">DRCTC User Sign Up</h1>
 <div class="container d-flex justify-content-center align-items-center" style="height: 100vh;">
-    <form class="col-md-6 mx-auto" action="/userlogin" method="POST">
+    <form class="col-md-6 mx-auto">
         <div class="p-1">
             <label for="name" class="col-12">Name <i class="text-danger">*</i></label>
             <input type="text" id="name" name="username" placeholder="Enter name" class="form-control" required>
@@ -40,9 +40,9 @@
             <input type="password" id="confirmpassword" maxlength="10" name="confirmpassword" placeholder="Confirm password" class="form-control" required>
             <span class="text-danger d-none">Password did not match!</span>
         </div>
-        <div class="row mt-3">
-            <div class="col-6 text-right">
-                <button type="submit" id="create" class="btn btn-primary">Create Account</button>
+        <div class="row mt-5">
+            <div class="col-12 text-center">
+                <button id="create" class="btn btn-primary">Create Account</button>
             </div>
         </div>
     </form>

@@ -12,7 +12,6 @@ public class UserService {
     UserRepository userRepository;
 
     public int addUser(User user){
-        User user2 = userRepository.save(user);
-        return user2.getId();
+        return userRepository.save(user).getId();
     }
 }

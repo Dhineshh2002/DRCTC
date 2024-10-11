@@ -3,10 +3,8 @@ package org.DRTCT.controller;
 import org.DRTCT.entity.User;
 import org.DRTCT.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 @RestController
 @RequestMapping (value = "/user")
@@ -16,21 +14,21 @@ public class UserController {
     UserService userService;
 
     @RequestMapping (value = "/signup")
-    private String openSignUpPage(){
-        //return "http://localhost:63342/DRTCT/templates/usersignup.html";
-        return "usersignup";
+    private ModelAndView openSignUpPage(){
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("usersignup");
+        return modelAndView;
     }
 
     @RequestMapping (value = "/login")
-    private String openLoginPage(){
-        return "userlogin";
+    private ModelAndView openLoginPage(){
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("userlogin");
+        return modelAndView;
     }
 
-    @RequestMapping (value = "/user", method = RequestMethod.POST)
+    @PostMapping(value = "/add")
     private int addUser(@RequestBody User user) {
-
-        String name = user.getName();
-
         return userService.addUser(user);
     }
 //

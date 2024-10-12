@@ -1,10 +1,5 @@
 $(document).ready(function () {
 
-
-    $('#signup').click(function () {
-        window.location.href = "/user/signup";
-    });
-
     $('#password').focusout(function () {
         if (!isValidPassword($(this).val())) {
             $(this).closest('div').find('span').removeClass('d-none');
@@ -23,6 +18,45 @@ $(document).ready(function () {
             $(this).closest('div').find('span').addClass('d-none');
         }
     })
+
+    $('form').on('submit', function (event) {
+        event.preventDefault();
+    });
+
+    //LOGIN PAGE SCRIPT
+
+    $('#login').click(function () {
+
+        let username = $('#username').val().trim();
+        let password = $('#password').val().trim();
+
+        const User = { username, password };
+
+        fetch('/user/check', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(User)
+        }).then(response => {
+            console.log(response);
+            if (!response.ok) {
+                throw new Error("Server crashed")
+            }
+            return response.json();
+        }).then(data => {
+            console.log(data);
+            window.location.href = '/user/home?username='+data.username;
+        }).catch(e => {
+            console.error('There was a problem with the fetch operation:', e);
+        })
+    });
+
+
+    // SIGN UP PAGE
+    $('#signup').click(function () {
+        window.location.href = "/user/signup";
+    });
 
     $('#create').click(function () {
 
@@ -50,16 +84,15 @@ $(document).ready(function () {
             body: JSON.stringify(User)
         }).then(response => {
             if (!response.ok) {
-                throw new Error('Sorry for error');
+                throw new Error('Server not responded');
             }
             return response.json();
-        })
-            .then(data => {
-                alert("Server responded with: " + data.val + " Status code: " + response.status);
-            })
-            .catch(error => {
-                console.error('There was a problem with the fetch operation:', error);
-            });
+        }).then(data => {
+            alert("account created :) Please login now");
+            window.location.href = "/user/login";
+        }).catch(error => {
+            console.error('There was a problem with the fetch operation:', error);
+        });
     })
 
     function isValidPassword(password) {

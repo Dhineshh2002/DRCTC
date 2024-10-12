@@ -14,4 +14,15 @@ public class UserService {
     public int addUser(User user){
         return userRepository.save(user).getId();
     }
+
+    public User checkUserExist(User user) {
+        String username = user.getUsername();
+        String password = user.getPassword();
+
+        return userRepository.findByUsernameAndPassword(username, password);
+    }
+
+    public User getUser(String username) {
+        return userRepository.findByUsername(username);
+    }
 }

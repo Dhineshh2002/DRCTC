@@ -5,12 +5,10 @@ import org.DRTCT.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.util.ArrayList;
 
 @RestController
 @RequestMapping (value = "/user")
@@ -19,36 +17,23 @@ public class UserController {
     @Autowired
     UserService userService;
 
-    @RequestMapping (value = "/signup")
-    private ModelAndView signup(){
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("usersignup");
-        return modelAndView;
-    }
-
-    @RequestMapping (value = "/login")
-    private ModelAndView login(){
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("userlogin");
-        return modelAndView;
-    }
-
-    @RequestMapping("/home")
-    public ModelAndView homePage(@RequestParam(value = "username", required = true) String username) {
-        ModelAndView modelAndView = new ModelAndView();
-        User user = userService.getUser(username);
-        if (user != null) {
-            modelAndView.addObject("user", user);
-        } else {
-            modelAndView.addObject("error", "User not found");
-        }
-        modelAndView.setViewName("home"); // Set the view for the home page
-        return modelAndView;
-    }
-
     @PostMapping(value = "/add")
-    private int addUser(@RequestBody User user) {
-        return userService.addUser(user);
+    public ModelAndView addUser(@RequestBody User user) throws Exception {
+        ModelAndView modelAndView = new ModelAndView();
+        try {
+            userService.addUser(user);
+            modelAndView.setViewName("userlogin");
+            return modelAndView;
+        } catch (Exception e) {
+            modelAndView.addObject("error", e.getMessage());
+            modelAndView.setViewName("usersignup");
+            return modelAndView;
+        }
+    }
+
+    @GetMapping(value = "/get")
+    public ArrayList<User> getUsers() {
+        return userService.getUsers();
     }
 
     @PostMapping(value = "/check")
@@ -63,16 +48,4 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
         }
     }
-
-
-//
-//    @RequestMapping (value = "/update/user")
-//    private String updateUser(User user){
-//
-//    }
-//
-//    @RequestMapping (value = "/get/user")
-//    private User getUser(User user){
-//
-//    }
 }

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -11,7 +11,7 @@
 
 <h1 class="text-center">DRCTC User Login</h1>
 <div class="container d-flex justify-content-center align-items-center" style="height: 100vh;">
-    <form class="col-md-6 mx-auto" id="form-login" method="POST">
+    <form class="col-md-6 mx-auto" action="/user/login" method="POST">
         <div class="p-1">
             <label for="username" class="col-12">User name</label>
             <input type="text" id="username" name="username" placeholder="Enter username" class="form-control" required>
@@ -20,13 +20,14 @@
             <label for="password" class="col-12">Password</label>
             <input type="password" id="password" maxlength="10" name="password" placeholder="Enter password" class="form-control" required>
         </div>
-        <div class="row mt-3 d-flex justify-content-between">
-            <div class="col-md-1 text-right">
-                <button type="submit" id="login" class="btn btn-primary ">Login</button>
-            </div>
-            <div class="col-md-3 text-left">
+        <div class="row mt-3">
+            <div class="col-md-12 d-flex justify-content-between align-items-center">
+                <button type="submit" id="login" class="btn btn-primary">Login</button>
                 <button type="button" id="signup" class="btn btn-secondary">Sign up</button>
             </div>
+        </div>
+        <div class="text-danger" th:if="${error}">
+            <p th:text="${error}"></p>
         </div>
     </form>
 </div>

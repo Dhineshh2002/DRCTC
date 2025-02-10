@@ -19,13 +19,13 @@ $(document).ready(function () {
         }
     })
 
-    $('form').on('submit', function (event) {
+    $('#form-signup').on('submit', function (event) {
         event.preventDefault();
     });
 
     //LOGIN PAGE SCRIPT
 
-    $('#login').click(function () {
+    /* $('#login').click(function () {
 
         let username = $('#username').val().trim();
         let password = $('#password').val().trim();
@@ -50,7 +50,7 @@ $(document).ready(function () {
         }).catch(e => {
             console.error('There was a problem with the fetch operation:', e);
         })
-    });
+    }); */
 
 
     // SIGN UP PAGE
@@ -81,17 +81,7 @@ $(document).ready(function () {
             headers: {
                 'Content-Type': 'application/json', // Setting content type to JSON
             },
-            body: JSON.stringify(User)
-        }).then(response => {
-            if (!response.ok) {
-                throw new Error('Server not responded');
-            }
-            return response.json();
-        }).then(data => {
-            alert("account created :) Please login now");
-            window.location.href = "/user/login";
-        }).catch(error => {
-            console.error('There was a problem with the fetch operation:', error);
+            body: data
         });
     })
 

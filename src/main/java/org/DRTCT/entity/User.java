@@ -1,5 +1,4 @@
 package org.DRTCT.entity;
-
 import jakarta.persistence.*;
 
 @Entity

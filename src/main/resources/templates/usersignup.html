@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -42,8 +42,11 @@
         </div>
         <div class="row mt-5">
             <div class="col-12 text-center">
-                <button id="create" class="btn btn-primary">Create Account</button>
+                <button type="submit" id="create" class="btn btn-primary">Create Account</button>
             </div>
+        </div>
+        <div class="text-danger" th:if="${error}">
+            <p th:text="${error}"></p>
         </div>
     </form>
 </div>

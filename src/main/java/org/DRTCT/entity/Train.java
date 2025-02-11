@@ -31,6 +31,16 @@ public class Train {
     @Column(name = "last_modified", nullable = false, length = 100)
     private Timestamp lastModified;
 
+    public Train(String trainNumber, String trainName, String startPlace, String destinationPlace, int totalHoursOfTravel, String availableTicketBasedOnClass, Timestamp lastModified) {
+        this.trainNumber = trainNumber;
+        this.trainName = trainName;
+        this.startPlace = startPlace;
+        this.destinationPlace = destinationPlace;
+        this.totalHoursOfTravel = totalHoursOfTravel;
+        this.availableTicketBasedOnClass = availableTicketBasedOnClass;
+        this.lastModified = lastModified;
+    }
+
     public int getId() {
         return id;
     }

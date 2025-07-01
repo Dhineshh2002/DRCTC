@@ -1,5 +1,6 @@
 package org.DRTCT.service.impl;
 
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.DRTCT.dto.request.SavePassengerRequest;
@@ -22,6 +23,15 @@ public class PassengerServiceImpl implements PassengerService {
         Passenger passenger = buildPassenger(savePassengerRequest);
         passengerRepository.save(passenger);
         return PassengerResponse.create(passenger);
+    }
+
+    @Override
+    public Passenger getPassengerById(Long passengerId) {
+        return passengerRepository.findById(passengerId)
+                .orElseThrow(() -> {
+                    log.error("Passenger is not found with id={}", passengerId);
+                    return new EntityNotFoundException("Passenger not found with id=" + passengerId);
+                });
     }
 
     private Passenger buildPassenger(SavePassengerRequest savePassengerRequest) {

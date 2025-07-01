@@ -1,7 +1,8 @@
 package org.DRTCT.service;
+import org.DRTCT.dto.request.BookTicketRequest;
 
 public interface TicketService {
 
-    //TicketResponse bookTicket(BookTicketRequest bookTicketRequest);
+    void bookTicket(BookTicketRequest bookTicketRequest);
 
 }

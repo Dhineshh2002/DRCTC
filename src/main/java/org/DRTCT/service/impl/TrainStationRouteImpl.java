@@ -13,7 +13,11 @@ import org.DRTCT.repository.TrainStationRouteRepository;
 import org.DRTCT.service.StationService;
 import org.DRTCT.service.TrainService;
 import org.DRTCT.service.TrainStationRouteService;
+import org.apache.coyote.BadRequestException;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalTime;
 
 @Slf4j
 @Service
@@ -27,11 +31,8 @@ public class TrainStationRouteImpl implements TrainStationRouteService {
     @Override
     public void saveTrainRoute(SaveTrainRouteRequest saveTrainRoute) {
         log.info("saveTrainRoute: method was called for trainId={}", saveTrainRoute.trainId());
-        TrainStationRoute trainStationRoute = TrainStationRoute.fromRequest(saveTrainRoute);
-        Train train = trainService.getTrainById(saveTrainRoute.trainId());
-        Station station = stationService.getStationById(saveTrainRoute.stationId());
-        trainStationRoute.setStation(station);
-        trainStationRoute.setTrain(train);
+        routeExistByStationOrStopNumber(saveTrainRoute);
+        TrainStationRoute trainStationRoute = buildTrainStationRoute(saveTrainRoute);
         trainStationRouteRepository.save(trainStationRoute);
     }
 
@@ -48,5 +49,24 @@ public class TrainStationRouteImpl implements TrainStationRouteService {
     @Override
     public void getTrainRoute(Long id) {
 
+    }
+
+    private TrainStationRoute buildTrainStationRoute(SaveTrainRouteRequest saveTrainRoute) {
+        TrainStationRoute trainStationRoute = TrainStationRoute.fromRequest(saveTrainRoute);
+        Train train = trainService.getTrainById(saveTrainRoute.trainId());
+        Station station = stationService.getStationById(saveTrainRoute.stationId());
+        trainStationRoute.setStation(station);
+        trainStationRoute.setTrain(train);
+        return trainStationRoute;
+    }
+
+    private void routeExistByStationOrStopNumber(SaveTrainRouteRequest saveTrainRoute) {
+        if(trainStationRouteRepository.existsByStationId(saveTrainRoute.stationId())) {
+            log.info("Route already exist by this station id={}", saveTrainRoute.stationId());
+            throw new DuplicateKeyException("Route already exist by this station id=" + saveTrainRoute.stationId());
+        } else if (trainStationRouteRepository.existsByStopNumber(saveTrainRoute.stopNumber())) {
+            log.info("Route already exist by this stop number={}", saveTrainRoute.stopNumber());
+            throw new DuplicateKeyException("Route already exist by stop number=" + saveTrainRoute.stopNumber());
+        }
     }
 }

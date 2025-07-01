@@ -18,12 +18,36 @@ class StationServiceImplTest extends ValidateObject {
 
     @Test
     void saveStation() {
-        SaveStationRequest saveStationRequest = new SaveStationRequest(
-                "Mambalam",
-                "MBM"
-        );
-        validate(saveStationRequest);
-        stationService.saveStation(saveStationRequest);
+        SaveStationRequest chennaiEgmore = new SaveStationRequest("Chennai Egmore", "MS ");
+        SaveStationRequest mambalam = new SaveStationRequest("Mambalam", "MBM ");
+        SaveStationRequest tambaram = new SaveStationRequest("Tambaram", "TBM ");
+        SaveStationRequest chengalpattu = new SaveStationRequest("Chengalpattu", "CGL ");
+        SaveStationRequest villupuramJn = new SaveStationRequest("Villupuram Jn", "VM ");
+        SaveStationRequest cuddalorePort = new SaveStationRequest("Cuddalore Port", "CUPJ ");
+        SaveStationRequest chidambaram = new SaveStationRequest("Chidambaram", "CDM ");
+        SaveStationRequest sirkazhi = new SaveStationRequest("Sirkazhi", "SY ");
+        SaveStationRequest mayiladuturaiJn = new SaveStationRequest("Mayiladuturai Jn", "MV ");
+        SaveStationRequest kuttalam = new SaveStationRequest("Kuttalam", "KTM ");
+        SaveStationRequest aduturai = new SaveStationRequest("Aduturai", "ADT ");
+        SaveStationRequest kumbakonam = new SaveStationRequest("Kumbakonam", "KMU ");
+        SaveStationRequest papanasam = new SaveStationRequest("Papanasam", "PML ");
+        SaveStationRequest thanjavurJn = new SaveStationRequest("Thanjavur Junction", "TJ ");
+
+        stationService.saveStation(chennaiEgmore);
+        stationService.saveStation(mambalam);
+        stationService.saveStation(tambaram);
+        stationService.saveStation(chengalpattu);
+        stationService.saveStation(villupuramJn);
+        stationService.saveStation(cuddalorePort);
+        stationService.saveStation(chidambaram);
+        stationService.saveStation(sirkazhi);
+        stationService.saveStation(mayiladuturaiJn);
+        stationService.saveStation(kuttalam);
+        stationService.saveStation(aduturai);
+        stationService.saveStation(kumbakonam);
+        stationService.saveStation(papanasam);
+        stationService.saveStation(thanjavurJn);
+
     }
 
     @Test

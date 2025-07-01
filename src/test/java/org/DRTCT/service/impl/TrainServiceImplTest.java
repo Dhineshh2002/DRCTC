@@ -26,8 +26,8 @@ class TrainServiceImplTest extends ValidateObject {
         SaveTrainRequest saveTrainRequest = new SaveTrainRequest(
                 34703,
                 "Uzhavan Express",
-                1L,
                 2L,
+                4L,
                 100,
                 10
         );

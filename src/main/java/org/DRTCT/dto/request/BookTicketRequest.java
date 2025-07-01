@@ -1,11 +1,14 @@
 package org.DRTCT.dto.request;
-
-import org.DRTCT.entity.Passenger;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+import java.time.LocalDate;
+import java.util.List;
 
 public record BookTicketRequest (
-        Long trainId,
-        Long passengerId
-
-
-){
+        @NotNull Long trainId,
+        @NotNull Long sourceStationId,
+        @NotNull Long destinationStationId,
+        @NotNull @Size(min = 1) List<Long> passengerIds,
+        @NotNull LocalDate journeyDate
+) {
 }

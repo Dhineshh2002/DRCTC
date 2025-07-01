@@ -34,7 +34,7 @@ public class TrainStationRoute {
     @Column(name = "arrival_time", nullable = false)
     private LocalTime arrivalTime;
 
-    @Column(name = "departure_time")
+    @Column(name = "departure_time", nullable = false)
     private LocalTime departureTime;
 
     public static TrainStationRoute fromRequest(SaveTrainRouteRequest saveTrainRoute) {

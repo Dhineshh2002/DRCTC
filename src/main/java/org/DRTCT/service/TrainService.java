@@ -1,22 +1,13 @@
 package org.DRTCT.service;
 
+import org.DRTCT.dto.request.SaveTrainRequest;
+import org.DRTCT.dto.response.TrainResponse;
 import org.DRTCT.entity.Train;
-import org.DRTCT.entity.User;
-import org.DRTCT.repository.TrainRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
+public interface TrainService {
 
-@Service
-public class TrainService {
+    TrainResponse saveTrain(SaveTrainRequest saveTrainRequest);
+    TrainResponse updateTrain(SaveTrainRequest saveTrainRequest, Long id);
+    Train getTrainById(Long id);
 
-    @Autowired
-    private TrainRepository trainRepository;
-
-    public ArrayList<Train> getTrains() {
-        ArrayList<Train> trains = new ArrayList<Train>();
-        trainRepository.findAll().forEach(trains::add);
-        return trains;
-    }
 }

@@ -1,107 +1,57 @@
 package org.DRTCT.entity;
+
 import jakarta.persistence.*;
-import java.sql.Timestamp;
+import lombok.*;
+import org.DRTCT.dto.request.SaveTrainRequest;
+
+import java.util.List;
 
 @Entity
-@Table (name="train", schema = "drtct")
+@Table(name = "train")
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
+@Builder
 public class Train {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
-    @Column(name = "train_number", nullable = false, length = 20)
-    private String trainNumber;
+    @Column(name = "train_number", nullable = false, unique = true)
+    private Integer number;
 
-    @Column(name = "train_name", nullable = false, length = 100)
-    private String trainName;
+    @Column(name = "train_name", nullable = false)
+    private String name;
 
-    @Column(name = "start_place", nullable = false, length = 100)
-    private String startPlace;
+    @ManyToOne
+    @JoinColumn(name = "start_station_id", nullable = false)
+    private Station start;
 
-    @Column(name = "destination_place", nullable = false, length = 100)
-    private String destinationPlace;
+    @ManyToOne
+    @JoinColumn(name = "destination_station_id", nullable = false)
+    private Station destination;
 
-    @Column(name = "total_hours_of_travel", nullable = false)
-    private int totalHoursOfTravel;
+    @Column(name = "total_seats", nullable = false)
+    private Integer totalSeats;
 
-    @Column(name = "available_ticket_based_on_class", nullable = false)
-    private String availableTicketBasedOnClass;
+    @Column(name = "total_wl_seats", nullable = false)
+    private Integer totalWLSeats;
 
-    @Column(name = "last_modified", nullable = false, length = 100)
-    private Timestamp lastModified;
+    @OneToMany(mappedBy = "train", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Ticket> tickets;
 
-    public Train(String trainNumber, String trainName, String startPlace, String destinationPlace, int totalHoursOfTravel, String availableTicketBasedOnClass, Timestamp lastModified) {
-        this.trainNumber = trainNumber;
-        this.trainName = trainName;
-        this.startPlace = startPlace;
-        this.destinationPlace = destinationPlace;
-        this.totalHoursOfTravel = totalHoursOfTravel;
-        this.availableTicketBasedOnClass = availableTicketBasedOnClass;
-        this.lastModified = lastModified;
+    @OneToMany(mappedBy = "train", cascade = CascadeType.ALL)
+    private List<TrainStationRoute> route;
+
+    public static Train fromRequest(SaveTrainRequest saveTrainRequest) {
+        return Train.builder()
+                .name(saveTrainRequest.name())
+                .number(saveTrainRequest.number())
+                .totalSeats(saveTrainRequest.totalSeats())
+                .totalWLSeats(saveTrainRequest.totalWLSeats())
+                .build();
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getTrainNumber() {
-        return trainNumber;
-    }
-
-    public void setTrainNumber(String trainNumber) {
-        this.trainNumber = trainNumber;
-    }
-
-    public String getTrainName() {
-        return trainName;
-    }
-
-    public void setTrainName(String trainName) {
-        this.trainName = trainName;
-    }
-
-    public String getDestinationPlace() {
-        return destinationPlace;
-    }
-
-    public void setDestinationPlace(String destinationPlace) {
-        this.destinationPlace = destinationPlace;
-    }
-
-    public String getStartPlace() {
-        return startPlace;
-    }
-
-    public void setStartPlace(String startPlace) {
-        this.startPlace = startPlace;
-    }
-
-    public int getTotalHoursOfTravel() {
-        return totalHoursOfTravel;
-    }
-
-    public void setTotalHoursOfTravel(int totalHoursOfTravel) {
-        this.totalHoursOfTravel = totalHoursOfTravel;
-    }
-
-    public String getAvailableTicketBasedOnClass() {
-        return availableTicketBasedOnClass;
-    }
-
-    public void setAvailableTicketBasedOnClass(String availableTicketBasedOnClass) {
-        this.availableTicketBasedOnClass = availableTicketBasedOnClass;
-    }
-
-    public Timestamp getLastModified() {
-        return lastModified;
-    }
-
-    public void setLastModified(Timestamp lastModified) {
-        this.lastModified = lastModified;
-    }
 }

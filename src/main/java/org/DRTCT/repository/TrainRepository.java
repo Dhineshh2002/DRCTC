@@ -1,11 +1,11 @@
 package org.DRTCT.repository;
-
 import org.DRTCT.entity.Train;
-import org.DRTCT.entity.User;
-import org.springframework.data.repository.CrudRepository;
-import org.springframework.stereotype.Repository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-@Repository
-public interface TrainRepository extends CrudRepository<Train, Integer> {
-    public Train findByTrainName(String trainName);
+import java.util.Optional;
+
+public interface TrainRepository extends JpaRepository<Train, Long> {
+    boolean existsByNumber(Integer number);
+    boolean existsByNumberAndIdNot(Integer number, Long id);
+    Optional<Train> getTrainById(Long trainId);
 }

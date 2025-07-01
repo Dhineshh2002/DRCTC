@@ -1,4 +1,7 @@
 package org.DRTCT.service;
 
-public class TicketService {
+public interface TicketService {
+
+    //TicketResponse bookTicket(BookTicketRequest bookTicketRequest);
+
 }

@@ -1,7 +1,12 @@
-server.port: 4503
+server:
+  port: 4503
 
 spring:
   datasource:
     url: jdbc:mysql://localhost:3306/drctc
     username: Dhinesh
     password: Dhinesh1@
+
+  jpa:
+    hibernate:
+      ddl-auto: update
